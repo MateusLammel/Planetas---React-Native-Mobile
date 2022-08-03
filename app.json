@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "planets",
+    "slug": "planets",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
