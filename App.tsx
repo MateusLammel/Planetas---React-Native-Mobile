@@ -7,6 +7,8 @@ import {
   Roboto_500Medium,
   useFonts,
 } from "@expo-google-fonts/roboto";
+import { ThemeProvider } from "styled-components";
+import theme from "./src/global/theme";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -18,8 +20,8 @@ export default function App() {
     return <ActivityIndicator />;
   }
   return (
-    <View>
+    <ThemeProvider theme={theme}>
       <Login />
-    </View>
+    </ThemeProvider>
   );
 }
