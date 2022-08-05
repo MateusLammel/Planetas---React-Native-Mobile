@@ -4,22 +4,20 @@ import { InputText } from "../../components/InputText";
 import {
   Container,
   InputsContainer,
-  LoginContainer,
-  LogoContainer,
-  LogoRocket,
   ErrorMessage,
+  Title,
+  SubTitle,
+  SignUpContainer,
+  Header,
 } from "./styles";
 import { useFormik } from "formik";
-import { object, string } from "yup";
+import { object, string, ref } from "yup";
 import { useTheme } from "styled-components";
-import Logo from "../../assets/logo.png";
-import { Button } from "../../components/Button";
 import Background from "../../assets/back.png";
-import { useNavigation } from "@react-navigation/native";
+import { Button } from "../../components/Button";
 
-export function Login() {
+export function SignUp() {
   const theme = useTheme();
-  const navigation = useNavigation<any>();
   const [loading, setLoading] = useState(false);
 
   const validationSchema = object({
@@ -27,21 +25,21 @@ export function Login() {
     password: string()
       .min(8, "No minímo 8 caracteres")
       .required("Senha brigatória"),
+    confirmPassword: string()
+      .required("Senha brigatória")
+      .oneOf([ref("password"), null], "As senhas devem ser iguais"),
   });
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
 
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setLoading(true);
-      setTimeout(function () {
-        navigation.navigate("Home");
-        setLoading(false);
-      }, 3000);
     },
   });
 
@@ -51,11 +49,12 @@ export function Login() {
   }
 
   return (
-    <Container source={Background} resizeMode="cover">
-      <LogoContainer>
-        <LogoRocket source={Logo} resizeMode="center" />
-      </LogoContainer>
-      <LoginContainer>
+    <Container source={Background}>
+      <Header>
+        <Title>Pronto para explorar o espaço?</Title>
+        <SubTitle>Faça seu cadastro e tenha acessos à diversas galáxias e planetas</SubTitle>
+      </Header>
+      <SignUpContainer>
         <InputsContainer>
           <InputText
             placeholderTextColor={theme.colors.gray_300}
@@ -79,15 +78,27 @@ export function Login() {
           {Boolean(formik.errors.password) && formik.touched.password && (
             <ErrorMessage>{formik.errors.password}</ErrorMessage>
           )}
+          <InputText
+            name="password"
+            iconName="lock"
+            placeholder="Senha"
+            placeholderTextColor={theme.colors.gray_300}
+            onChangeText={formik.handleChange("password")}
+            value={formik.values.confirmPassword}
+          />
+          {Boolean(formik.errors.confirmPassword) &&
+            formik.touched.confirmPassword && (
+              <ErrorMessage>{formik.errors.confirmPassword}</ErrorMessage>
+            )}
         </InputsContainer>
 
         <Button
-          title="ENTRAR"
+          title="CADASTRAR"
           onPress={handleSubmit}
           loading={loading}
           backgroundColor={theme.colors.main_green}
         />
-      </LoginContainer>
+      </SignUpContainer>
     </Container>
   );
 }
