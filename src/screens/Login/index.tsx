@@ -34,14 +34,13 @@ export function Login() {
       email: "",
       password: "",
     },
-
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setLoading(true);
       setTimeout(function () {
         navigation.navigate("Home");
         setLoading(false);
-      }, 3000);
+      }, 2000);
     },
   });
 

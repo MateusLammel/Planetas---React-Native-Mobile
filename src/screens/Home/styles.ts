@@ -1,17 +1,20 @@
 import React from "react";
-import { StatusBar, TouchableOpacity } from "react-native";
+import { FlatList, StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
-import Background from "../../assets/back.png";
+import { Galaxy } from "../../@types/interfaces";
+
+
 
 export const Container = styled.ImageBackground`
   flex: 1;
   padding: 0 20px;
   background: ${({ theme }) => theme.colors.black};
+  border-radius: 12px;
 `;
 
 export const Header = styled.View`
-  margin-top: ${StatusBar.currentHeight + 50}px;
+  margin-top: ${StatusBar.currentHeight + 10}px;
 `;
 export const Title = styled.Text`
   font-size: ${RFValue(30)}px;
@@ -20,19 +23,22 @@ export const Title = styled.Text`
 `;
 
 export const SubTitle = styled.Text`
-  font-size: ${RFValue(18)}px;
+  font-size: ${RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.primary_400};
   color: ${({ theme }) => theme.colors.gray_300};
   line-height: 32;
   margin-top: 15px;
 `;
 
-export const Menu = styled.View`
-  flex-direction: row;
+export const GalaxiesList = styled(
+  FlatList as new () => FlatList<Galaxy>
+).attrs({
+  contentContainerStyle: {},
+  showsVerticalScrollIndicator: false,
+})`
+  margin: 20px 0;
 `;
 
-export const MenuButton = styled(TouchableOpacity).attrs({
-  activeOpacity: 0.8,
-})``;
-
-export const MenuButtonText = styled.Text``;
+export const Separator = styled.View`
+  height: 20px;
+`;
