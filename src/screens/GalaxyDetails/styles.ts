@@ -8,23 +8,27 @@ export const Container = styled.ImageBackground`
   border-radius: 12px;
 `;
 
-export const Header = styled.View`
-  margin-top: ${StatusBar.currentHeight + 10}px;
+export const Header = styled.View``;
+export const NameContainer = styled.View`
+  padding: 10px;
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.colors.gray_400};
+  border-radius: 7px;
+  align-items: center;
+  margin: 20px 20px 0 20px;
 `;
-export const Title = styled.Text`
-  font-size: ${RFValue(30)}px;
-  font-family: ${({ theme }) => theme.fonts.primary_500};
-  color: ${({ theme }) => theme.colors.text_white};
-  margin: 10px 20px;
+export const NameTitle = styled.Text`
+  font-size: ${RFValue(20)}px;
+  color: ${({ theme }) => theme.colors.gray_300};
+  font-family: ${({ theme }) => theme.fonts.primary_400};
 `;
 
-export const SubTitle = styled.Text`
-  font-size: ${RFValue(16)}px;
-  font-family: ${({ theme }) => theme.fonts.primary_400};
-  color: ${({ theme }) => theme.colors.gray_300};
-  line-height: 32;
-  margin-top: 15px;
+export const Name = styled.Text`
+  font-size: ${RFValue(22)}px;
+  color: ${({ theme }) => theme.colors.text_white};
+  font-family: ${({ theme }) => theme.fonts.primary_500};
 `;
+
 export const Photo = styled.Image`
   width: 100%;
   height: 280px;
@@ -33,27 +37,30 @@ export const Photo = styled.Image`
 export const Infos = styled.View`
   margin: 20px;
   justify-content: space-between;
+  align-items: center;
   flex-direction: row;
 `;
 
 export const InfoContainer = styled.View`
   padding: 10px;
   border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.main_green};
+  border-color: ${({ theme }) => theme.colors.gray_400};
   border-radius: 7px;
+  width: 190px;
 `;
 
 export const InfoTitle = styled.Text`
   font-size: ${RFValue(15)}px;
   color: ${({ theme }) => theme.colors.gray_300};
   font-family: ${({ theme }) => theme.fonts.primary_400};
+  text-align: center;
 `;
 
 export const InfoResult = styled.Text`
-  margin-top: 6px;
+  margin-top: 2px;
   text-align: center;
-  font-size: ${RFValue(18)}px;
-  color: ${({ theme }) => theme.colors.dark_green};
+  font-size: ${RFValue(17)}px;
+  color: ${({ theme }) => theme.colors.text_white};
   font-family: ${({ theme }) => theme.fonts.primary_500};
 `;
 
@@ -93,11 +100,9 @@ export const ButtonsContainer = styled.View`
 export const DeleteButton = styled(TouchableOpacity).attrs({
   activeOpacity: 0.6,
 })`
-  width: 180px;
+  width: 190px;
   height: 65px;
-  border-width: 1px;
-  border-color: rgba(205, 41, 20, 1);
-  background-color: rgba(240, 54, 30, 0.15);
+  background-color: ${({ theme }) => theme.colors.gray_400};
   border-radius: 4px;
   align-items: center;
   justify-content: center;
@@ -105,11 +110,9 @@ export const DeleteButton = styled(TouchableOpacity).attrs({
 export const EditButton = styled(TouchableOpacity).attrs({
   activeOpacity: 0.6,
 })`
-  width: 180px;
+  width: 190px;
   height: 65px;
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.gray_300};
-  background-color: rgba(91, 91, 91, 0.2);
+  background-color: ${({ theme }) => theme.colors.main_green};
   border-radius: 4px;
   align-items: center;
   justify-content: center;

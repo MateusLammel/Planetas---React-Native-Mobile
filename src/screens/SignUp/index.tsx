@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Keyboard } from "react-native";
+import { Keyboard, StatusBar } from "react-native";
 import { InputText } from "../../components/InputText";
 import {
   Container,
@@ -50,9 +50,12 @@ export function SignUp() {
 
   return (
     <Container source={Background}>
+      <StatusBar barStyle="light-content" />
       <Header>
         <Title>Pronto para explorar o espaço?</Title>
-        <SubTitle>Faça seu cadastro e tenha acessos à diversas galáxias e planetas</SubTitle>
+        <SubTitle>
+          Faça seu cadastro e tenha acessos à diversas galáxias e planetas
+        </SubTitle>
       </Header>
       <SignUpContainer>
         <InputsContainer>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Keyboard } from "react-native";
+import { Keyboard, StatusBar } from "react-native";
 import { InputText } from "../../components/InputText";
 import {
   Container,
@@ -51,6 +51,7 @@ export function Login() {
 
   return (
     <Container source={Background} resizeMode="cover">
+      <StatusBar barStyle="light-content" />
       <LogoContainer>
         <LogoRocket source={Logo} resizeMode="center" />
       </LogoContainer>

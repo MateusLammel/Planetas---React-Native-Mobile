@@ -29,8 +29,6 @@ export const Footer = styled(LinearGradient)`
 
 export const Name = styled.Text`
   font-size: ${RFValue(20)}px;
-  color: ${({ theme }) => theme.colors.dark_green};
+  color: ${({ theme }) => theme.colors.main_green};
   font-family: ${({ theme }) => theme.fonts.primary_500};
 `;
-
-

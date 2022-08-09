@@ -12,11 +12,13 @@ import Background from "../../assets/back.png";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { InfoCard } from "../../components/InfoCard";
-import { TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+import {
+  StatusBar,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Galaxy } from "../../@types/interfaces";
-
-
 
 const galaxies: Galaxy[] = [
   {
@@ -54,13 +56,13 @@ export function Home() {
 
   return (
     <Container source={Background}>
+      <StatusBar barStyle="light-content" />
       <Header>
         <Title>Explore suas galáxias!</Title>
         <SubTitle>
           Navegue pelas suas galáxias e acesse os seus planetas
         </SubTitle>
       </Header>
-
       <GalaxiesList
         data={galaxies}
         keyExtractor={(item) => item.id}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, Keyboard } from "react-native";
+import { Image, Keyboard, StatusBar } from "react-native";
 
 import {
   Container,
@@ -20,7 +20,8 @@ export function FirstScreen() {
   const navigation = useNavigation<any>();
 
   return (
-    <Container source={Background} >
+    <Container source={Background}>
+      <StatusBar barStyle="light-content" />
       <Header>
         <Title>Embarcar na aventura</Title>
         <SubTitle>Crie e customize galáxias e planetas inteiros!</SubTitle>

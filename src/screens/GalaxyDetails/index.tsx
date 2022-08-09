@@ -9,11 +9,14 @@ import {
   InfoResult,
   Infos,
   InfoTitle,
+  Name,
+  NameContainer,
+  NameTitle,
   Photo,
   PlanetImage,
   PlanetName,
   PlanetsSlider,
-  Title,
+
 } from "./styles";
 import Background from "../../assets/back.png";
 import { useRoute } from "@react-navigation/native";
@@ -22,7 +25,7 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, StatusBar, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import theme from "../../global/theme";
@@ -61,17 +64,21 @@ export function GalaxyDetails() {
   return (
     <Container source={Background}>
       <Header>
-        <Title>{galaxy.name}</Title>
+        <StatusBar barStyle="light-content" />
         <Photo source={galaxy.photo} />
       </Header>
 
+      <NameContainer>
+     
+        <Name>{galaxy.name}</Name>
+      </NameContainer>
       <Infos>
         <InfoContainer>
-          <InfoTitle>Tipo da galáxia</InfoTitle>
+          <InfoTitle>Tipo</InfoTitle>
           <InfoResult>{galaxy.type}</InfoResult>
         </InfoContainer>
         <InfoContainer>
-          <InfoTitle>Número de planetas</InfoTitle>
+          <InfoTitle>Planetas</InfoTitle>
           <InfoResult>{String(galaxy.numberOfPlanets)}</InfoResult>
         </InfoContainer>
       </Infos>
@@ -97,12 +104,12 @@ export function GalaxyDetails() {
           <MaterialCommunityIcons
             name="delete-outline"
             size={34}
-            color="rgba(205, 41, 20, 1)"
+            color={theme.colors.gray_600}
           />
         </DeleteButton>
 
         <EditButton opacity>
-          <Feather name="edit" size={30} color={theme.colors.gray_300} />
+          <Feather name="edit" size={30} color={theme.colors.gray_600} />
         </EditButton>
       </ButtonsContainer>
     </Container>

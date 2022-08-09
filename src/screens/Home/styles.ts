@@ -14,7 +14,7 @@ export const Container = styled.ImageBackground`
 `;
 
 export const Header = styled.View`
-  margin-top: ${StatusBar.currentHeight + 10}px;
+  margin-top: 20px;
 `;
 export const Title = styled.Text`
   font-size: ${RFValue(30)}px;
