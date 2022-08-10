@@ -12,7 +12,7 @@ export function InfoCard({ photo, name }: Galaxies) {
   const theme = useTheme();
 
   return (
-    <Container source={photo} imageStyle={{ borderRadius: 10 }}>
+    <Container source={{uri:photo}} imageStyle={{ borderRadius: 10 }}>
       <Footer colors={["transparent", "black"]} start={[0, 0.1]}>
         <Name>{name}</Name>
       </Footer>

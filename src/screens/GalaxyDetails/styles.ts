@@ -1,5 +1,10 @@
 import React from "react";
-import { StatusBar, TouchableHighlight, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  StatusBar,
+  TouchableHighlight,
+  TouchableOpacity,
+} from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
@@ -9,21 +14,16 @@ export const Container = styled.ImageBackground`
 `;
 
 export const Header = styled.View``;
-export const NameContainer = styled.View`
-  padding: 10px;
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.gray_400};
-  border-radius: 7px;
-  align-items: center;
-  margin: 20px 20px 0 20px;
-`;
-export const NameTitle = styled.Text`
-  font-size: ${RFValue(20)}px;
-  color: ${({ theme }) => theme.colors.gray_300};
-  font-family: ${({ theme }) => theme.fonts.primary_400};
+
+export const FormContainer = styled(ScrollView).attrs({
+  showsVerticalScrollIndicator: false,
+})`
+  margin: 0 16px;
+  padding: 10px 0;
 `;
 
 export const Name = styled.Text`
+  margin: 10px 16px;
   font-size: ${RFValue(22)}px;
   color: ${({ theme }) => theme.colors.text_white};
   font-family: ${({ theme }) => theme.fonts.primary_500};
@@ -31,43 +31,31 @@ export const Name = styled.Text`
 
 export const Photo = styled.Image`
   width: 100%;
-  height: 280px;
+  height: 220px;
 `;
 
-export const Infos = styled.View`
-  margin: 20px;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
-`;
-
-export const InfoContainer = styled.View`
-  padding: 10px;
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.gray_400};
-  border-radius: 7px;
-  width: 190px;
-`;
-
-export const InfoTitle = styled.Text`
-  font-size: ${RFValue(15)}px;
+export const Info = styled.Text`
+  font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.gray_300};
   font-family: ${({ theme }) => theme.fonts.primary_400};
-  text-align: center;
+  padding: 15px 0;
+  text-align: justify;
+  border-bottom-width: 0.5px;
+  border-color: ${({ theme }) => theme.colors.gray_400};
 `;
 
-export const InfoResult = styled.Text`
-  margin-top: 2px;
-  text-align: center;
-  font-size: ${RFValue(17)}px;
+export const InfoContent = styled.Text`
+  font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.text_white};
   font-family: ${({ theme }) => theme.fonts.primary_500};
+  width: 100%;
+  line-height: 28px;
 `;
 
 export const PlanetsSlider = styled.View`
   flex-direction: row;
-  margin: 0 20px;
   border-radius: 7px;
+  margin: 25px 15px 40px 15px;
 `;
 
 export const PlanetsTitle = styled.Text`
@@ -91,10 +79,10 @@ export const PlanetName = styled.Text`
 `;
 
 export const ButtonsContainer = styled.View`
-  margin: 50px 20px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin: 0px 15px 25px 15px;
 `;
 
 export const DeleteButton = styled(TouchableOpacity).attrs({

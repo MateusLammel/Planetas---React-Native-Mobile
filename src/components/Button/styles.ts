@@ -5,7 +5,6 @@ import styled from "styled-components/native";
 
 interface Props {
   isFocused: boolean;
-  
 }
 
 export const Container = styled(TouchableOpacity).attrs({

@@ -2,17 +2,14 @@ import React from "react";
 import { StatusBar, TouchableOpacity } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
-
+import { Octicons } from "@expo/vector-icons";
 export const Container = styled.ImageBackground`
   flex: 1;
-  padding: 0 24px;
+  padding: 30px 24px;
   justify-content: space-between;
 `;
 
-export const Header = styled.View`
-
-  padding: ${StatusBar.currentHeight + 20}px 24px 0 24px;
-`;
+export const Header = styled.View``;
 
 export const Title = styled.Text`
   font-size: ${RFValue(30)}px;
@@ -20,24 +17,44 @@ export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.text_white};
 `;
 
-export const FormContainer = styled.View``;
+export const FormContainer = styled.View`
+  justify-content: space-between;
+  height: 500px;
+`;
 
 export const PhotoContainer = styled.View`
   width: 100%;
-  height: 275px;
+  height: 240px;
+  align-items: center;
+  justify-content: center;
   border-radius: 5px;
   background-color: ${({ theme }) => theme.colors.black};
-  margin-bottom: 20px;
+`;
+
+export const IconBack = styled(TouchableOpacity).attrs({
+  activeOpacity: 0.8,
+})`
+  background-color: ${({ theme }) => theme.colors.text_white};
+  padding: 12px;
+  border-radius: 40px;
+  position: absolute;
+  right: 30px;
+  bottom: -5px;
+`;
+export const CameraIcon = styled(Octicons)``;
+export const Photo = styled.Image`
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
 `;
 
 export const Select = styled.View`
   width: 100%;
+  background-color: ${({ theme }) => theme.colors.black};
   flex-direction: row;
-  margin-top: 20px;
   border-radius: 5px;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.black};
   padding: 15px 20px;
 `;
 
@@ -56,8 +73,12 @@ export const OptionText = styled.Text`
 `;
 
 export const ButtonsContainer = styled.View`
-  margin-top: 20px;
   width: 100%;
   justify-content: space-between;
   height: 130px;
+`;
+export const ErrorMessage = styled.Text`
+  font-size: ${RFValue(12)}px;
+  font-family: ${({ theme }) => theme.fonts.primary_400};
+  color: ${({ theme }) => theme.colors.warning};
 `;

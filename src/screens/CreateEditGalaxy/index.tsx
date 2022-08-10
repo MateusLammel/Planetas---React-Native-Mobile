@@ -1,36 +1,55 @@
-import React, { useState } from "react";
-import { StatusBar, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, StatusBar } from "react-native";
+import { object, string } from "yup";
+import { useFormik } from "formik";
+import { useTheme } from "styled-components";
+import * as ImagePicker from "expo-image-picker";
 import {
   Container,
   ButtonsContainer,
   Title,
   Header,
-  Option,
-  OptionText,
   Select,
   FormContainer,
   PhotoContainer,
+  Photo,
+  ErrorMessage,
+  IconBack,
+  CameraIcon,
 } from "./styles";
-import { useTheme } from "styled-components";
+
 import { Button } from "../../components/Button";
-import { useNavigation } from "@react-navigation/native";
 import Background from "../../assets/estrelas.png";
-import { Octicons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
 import { InputText } from "../../components/InputText";
-import { Types } from "../../@types/interfaces";
 import { IconButton } from "../../components/IconButton/Index";
+import { galaxies } from "../../data/galaxies";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import { Galaxy } from "../../@types/interfaces";
 
 const types = ["Elíptica", "Espiral", "Irregular"];
 
 export function CreateEditGalaxy() {
   const [loading, setLoading] = useState(false);
-  const [typeSelected, setTypeSelected] = useState<Types>("" as Types);
+  const [editPage, setEditPage] = useState(false);
+  const navigate = useNavigation<any>();
   const theme = useTheme();
+  const route = useRoute();
+  const galaxy = route.params as Galaxy;
 
-  function handleSelectType(value: Types) {
-    setTypeSelected(value);
+  useFocusEffect(() => {
+    if (route.name.includes("EditGalaxy")) {
+      setEditPage(true);
+    }
+  });
+
+  function handleSelectType(value) {
+    formik.setFieldValue("type", value, false);
   }
+
   async function handleSelectAvatar() {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -38,66 +57,136 @@ export function CreateEditGalaxy() {
       aspect: [4, 4],
       quality: 1,
     });
+
+    if (result.cancelled) {
+      return;
+    }
+    const { uri } = result as ImagePicker.ImageInfo;
+    if (uri) {
+      formik.setFieldValue("photo", uri, false);
+    }
   }
+
+  function handleSubmit() {
+    if (!formik.values.photo) {
+      Alert.alert("Escolha uma imagem");
+    }
+    formik.handleSubmit();
+  }
+
+  const validationSchema = object({
+    name: string().required("Nome obrigatório"),
+    description: string().required("Descrição é obrigatória"),
+  });
+
+  const formikData = editPage
+    ? {
+        id: galaxy.id,
+        name: galaxy.name,
+        description: galaxy.description,
+        type: galaxy.type,
+        photo: galaxy.photo,
+        numberOfPlanets: galaxy.numberOfPlanets,
+      }
+    : {
+        id: 6,
+        name: "",
+        description: "",
+        type: "Elíptica",
+        photo: "",
+        numberOfPlanets: 0,
+      };
+
+  console.log(galaxy.name);
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: formikData,
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      values.id === galaxies.length;
+      setLoading(true);
+      galaxies.push(values);
+      navigate.navigate("Home");
+    },
+  });
+
   return (
     <Container source={Background}>
       <StatusBar barStyle="light-content" />
       <Header>
-        <Title>Cadastrar uma nova galáxia</Title>
+        <Title>
+          {editPage ? "Editar a galáxia" : "Cadastrar uma nova galáxia"}
+        </Title>
       </Header>
 
       <FormContainer>
         <PhotoContainer>
-          <IconButton
-            onPress={handleSelectAvatar}
-            iconColor={theme.colors.gray_300}
-            iconName="device-camera"
-            title="Escolha a imagem"
-            backgroundColor={"transparent"}
-            fontSize={20}
-            iconSize={30}
-          />
+          {!!formik.values.photo ? (
+            <>
+              <Photo
+                source={{
+                  uri: formik.values.photo,
+                }}
+              />
+              <IconBack onPress={handleSelectAvatar}>
+                <CameraIcon
+                  size={28}
+                  color={theme.colors.gray_500}
+                  name="device-camera"
+                />
+              </IconBack>
+            </>
+          ) : (
+            <IconButton
+              onPress={handleSelectAvatar}
+              iconColor={theme.colors.gray_300}
+              iconName="device-camera"
+              title="Escolha a imagem"
+              backgroundColor={"transparent"}
+              fontSize={20}
+              iconSize={30}
+            />
+          )}
         </PhotoContainer>
         <InputText
           iconName="edit-3"
           name="name"
           placeholder="Nome"
           placeholderTextColor={theme.colors.gray_300}
+          onChangeText={formik.handleChange("name")}
+          value={formik.values.name}
         />
+        {Boolean(formik.errors.name) && formik.touched.name && (
+          <ErrorMessage>{formik.errors.name}</ErrorMessage>
+        )}
+        <InputText
+          multiline
+          numberOfLines={3}
+          iconName="edit-3"
+          name="description"
+          placeholder="Descrição"
+          placeholderTextColor={theme.colors.gray_300}
+          onChangeText={formik.handleChange("description")}
+          value={formik.values.description}
+        />
+        {Boolean(formik.errors.description) && formik.touched.description && (
+          <ErrorMessage>{formik.errors.description}</ErrorMessage>
+        )}
         <Select>
-          <IconButton
-            onPress={() => handleSelectType("Espiral")}
-            iconColor={
-              typeSelected === "Espiral"
-                ? theme.colors.dark_green
-                : theme.colors.gray_400
-            }
-            iconName="dot-fill"
-            title="Espiral"
-            backgroundColor={"transparent"}
-          />
-          <IconButton
-            onPress={() => handleSelectType("Elíptica")}
-            iconColor={
-              typeSelected === "Elíptica"
-                ? theme.colors.dark_green
-                : theme.colors.gray_400
-            }
-            iconName="dot-fill"
-            title="Elíptica"
-            backgroundColor={"transparent"}
-          />
-          <IconButton
-            onPress={() => handleSelectType("Irregular")}
-            iconColor={
-              typeSelected === "Irregular"
-                ? theme.colors.dark_green
-                : theme.colors.gray_400
-            }
-            iconName="dot-fill"
-            title="Irregular"
-            backgroundColor={"transparent"}
-          />
+          {types.map((type) => (
+            <IconButton
+              onPress={() => handleSelectType(type)}
+              iconColor={
+                formik.values.type === type
+                  ? theme.colors.dark_green
+                  : theme.colors.gray_400
+              }
+              iconName="dot-fill"
+              title={type}
+              backgroundColor={"transparent"}
+            />
+          ))}
         </Select>
       </FormContainer>
       <ButtonsContainer>
@@ -107,7 +196,11 @@ export function CreateEditGalaxy() {
           color={theme.colors.dark_green}
         />
 
-        <Button title="SALVAR" backgroundColor={theme.colors.dark_green} />
+        <Button
+          title="SALVAR"
+          backgroundColor={theme.colors.dark_green}
+          onPress={handleSubmit}
+        />
       </ButtonsContainer>
     </Container>
   );

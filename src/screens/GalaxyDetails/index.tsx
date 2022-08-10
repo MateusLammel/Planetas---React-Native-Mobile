@@ -4,28 +4,20 @@ import {
   Container,
   DeleteButton,
   EditButton,
+  FormContainer,
   Header,
-  InfoContainer,
-  InfoResult,
-  Infos,
-  InfoTitle,
+  Info,
+  InfoContent,
   Name,
-  NameContainer,
-  NameTitle,
   Photo,
   PlanetImage,
   PlanetName,
   PlanetsSlider,
-
 } from "./styles";
 import Background from "../../assets/back.png";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Galaxy } from "../../@types/interfaces";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-} from "react-native-reanimated";
-import { FlatList, StatusBar, Text, View } from "react-native";
+import { FlatList, ScrollView, StatusBar, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import theme from "../../global/theme";
@@ -49,40 +41,30 @@ const planets = [
 
 export function GalaxyDetails() {
   const route = useRoute();
+  const navigation = useNavigation<any>();
   const galaxy = route.params as Galaxy;
-
-  function PlanetsCarousel() {
-    const offset = useSharedValue(0);
-
-    const carouselStyle = useAnimatedStyle(() => {
-      return {
-        transform: [{ translateX: 500 }],
-      };
-    });
-  }
 
   return (
     <Container source={Background}>
       <Header>
         <StatusBar barStyle="light-content" />
-        <Photo source={galaxy.photo} />
+        <Photo source={{ uri: galaxy.photo }} />
       </Header>
+      <Name>{galaxy.name}</Name>
+      <FormContainer>
+        <Info>
+          Descrição:
+          <InfoContent> {galaxy.description}</InfoContent>
+        </Info>
 
-      <NameContainer>
-     
-        <Name>{galaxy.name}</Name>
-      </NameContainer>
-      <Infos>
-        <InfoContainer>
-          <InfoTitle>Tipo</InfoTitle>
-          <InfoResult>{galaxy.type}</InfoResult>
-        </InfoContainer>
-        <InfoContainer>
-          <InfoTitle>Planetas</InfoTitle>
-          <InfoResult>{String(galaxy.numberOfPlanets)}</InfoResult>
-        </InfoContainer>
-      </Infos>
-
+        <Info>
+          Tipo: <InfoContent> {galaxy.type}</InfoContent>
+        </Info>
+        <Info>
+          Planetas:
+          <InfoContent> {String(galaxy.numberOfPlanets)}</InfoContent>
+        </Info>
+      </FormContainer>
       <PlanetsSlider>
         <FlatList
           decelerationRate="normal"
@@ -108,7 +90,7 @@ export function GalaxyDetails() {
           />
         </DeleteButton>
 
-        <EditButton opacity>
+        <EditButton onPress={() => navigation.navigate("EditGalaxy", galaxy)}>
           <Feather name="edit" size={30} color={theme.colors.gray_600} />
         </EditButton>
       </ButtonsContainer>

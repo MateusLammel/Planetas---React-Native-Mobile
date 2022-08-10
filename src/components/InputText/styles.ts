@@ -10,14 +10,13 @@ interface Props {
 
 export const Container = styled.View`
   width: 100%;
-  height: 56px;
+
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
-  padding: 0 16px;
+  padding: 16px;
   background-color: ${({ theme }) => theme.colors.black};
   border-radius: 5px;
- 
 `;
 
 export const IconContainer = styled.View<Props>`

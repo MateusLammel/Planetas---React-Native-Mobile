@@ -1,9 +1,8 @@
 export interface Galaxy {
   id: number;
   name: string;
+  description: string;
   photo: string;
-  type: Types;
+  type: string;
   numberOfPlanets: number;
 }
-
-export type Types = "Elíptica" | "Espiral" | "Irregular";
