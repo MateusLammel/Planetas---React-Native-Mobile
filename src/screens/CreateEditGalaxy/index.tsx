@@ -31,7 +31,7 @@ import {
 import { Galaxy } from "../../@types/interfaces";
 
 const types = ["Elíptica", "Espiral", "Irregular"];
-
+var rendertimes = 0
 export function CreateEditGalaxy() {
   const [loading, setLoading] = useState(false);
   const [editPage, setEditPage] = useState(false);
@@ -44,6 +44,7 @@ export function CreateEditGalaxy() {
     if (route.name.includes("EditGalaxy")) {
       setEditPage(true);
     }
+     
   });
 
   function handleSelectType(value) {
@@ -79,29 +80,30 @@ export function CreateEditGalaxy() {
     description: string().required("Descrição é obrigatória"),
   });
 
-  const formikData = editPage
-    ? {
-        id: galaxy.id,
-        name: galaxy.name,
-        description: galaxy.description,
-        type: galaxy.type,
-        photo: galaxy.photo,
-        numberOfPlanets: galaxy.numberOfPlanets,
-      }
-    : {
-        id: 6,
-        name: "",
-        description: "",
-        type: "Elíptica",
-        photo: "",
-        numberOfPlanets: 0,
-      };
+ const formikInitialValues =
+   editPage && galaxy
+     ? {
+         id: galaxy.id,
+         name: galaxy.name,
+         description: galaxy.description,
+         type: galaxy.type,
+         photo: galaxy.photo,
+         numberOfPlanets: 0,
+       }
+     : {
+         id: 0,
+         name: "",
+         description: "",
+         type: "Elíptica",
+         photo: "",
+         numberOfPlanets: 0,
+       };
 
-  console.log(galaxy.name);
+  console.log("render " + rendertimes++);
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: formikData,
+    initialValues: formikInitialValues,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       values.id === galaxies.length;
@@ -156,6 +158,7 @@ export function CreateEditGalaxy() {
           placeholderTextColor={theme.colors.gray_300}
           onChangeText={formik.handleChange("name")}
           value={formik.values.name}
+          defaultValue={formik.values.name}
         />
         {Boolean(formik.errors.name) && formik.touched.name && (
           <ErrorMessage>{formik.errors.name}</ErrorMessage>
@@ -169,6 +172,7 @@ export function CreateEditGalaxy() {
           placeholderTextColor={theme.colors.gray_300}
           onChangeText={formik.handleChange("description")}
           value={formik.values.description}
+          defaultValue={formik.values.description}
         />
         {Boolean(formik.errors.description) && formik.touched.description && (
           <ErrorMessage>{formik.errors.description}</ErrorMessage>
