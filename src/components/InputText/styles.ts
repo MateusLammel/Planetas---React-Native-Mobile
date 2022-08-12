@@ -35,4 +35,5 @@ export const Input = styled(TextInput)`
   font-family: ${({ theme }) => theme.fonts.primary_400};
   width: 100%;
   height: 100%;
+  max-height: 90px;
 `;

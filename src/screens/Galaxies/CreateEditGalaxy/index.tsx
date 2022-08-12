@@ -18,20 +18,20 @@ import {
   CameraIcon,
 } from "./styles";
 
-import { Button } from "../../components/Button";
-import Background from "../../assets/estrelas.png";
-import { InputText } from "../../components/InputText";
-import { IconButton } from "../../components/IconButton/Index";
-import { galaxies } from "../../data/galaxies";
+import { Button } from "../../../components/Button";
+import Background from "../../../assets/estrelas.png";
+import { InputText } from "../../../components/InputText";
+import { IconButton } from "../../../components/IconButton/Index";
+import { galaxies } from "../../../data/galaxies";
 import {
   useFocusEffect,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import { Galaxy } from "../../@types/interfaces";
+import { Galaxy } from "../../../@types/interfaces";
 
 const types = ["Elíptica", "Espiral", "Irregular"];
-var rendertimes = 0
+var rendertimes = 0;
 export function CreateEditGalaxy() {
   const [loading, setLoading] = useState(false);
   const [editPage, setEditPage] = useState(false);
@@ -44,7 +44,6 @@ export function CreateEditGalaxy() {
     if (route.name.includes("EditGalaxy")) {
       setEditPage(true);
     }
-     
   });
 
   function handleSelectType(value) {
@@ -80,24 +79,24 @@ export function CreateEditGalaxy() {
     description: string().required("Descrição é obrigatória"),
   });
 
- const formikInitialValues =
-   editPage && galaxy
-     ? {
-         id: galaxy.id,
-         name: galaxy.name,
-         description: galaxy.description,
-         type: galaxy.type,
-         photo: galaxy.photo,
-         numberOfPlanets: 0,
-       }
-     : {
-         id: 0,
-         name: "",
-         description: "",
-         type: "Elíptica",
-         photo: "",
-         numberOfPlanets: 0,
-       };
+  const formikInitialValues =
+    editPage && galaxy
+      ? {
+          id: galaxy.id,
+          name: galaxy.name,
+          description: galaxy.description,
+          type: galaxy.type,
+          photo: galaxy.photo,
+          numberOfPlanets: 0,
+        }
+      : {
+          id: "",
+          name: "",
+          description: "",
+          type: "Elíptica",
+          photo: "",
+          numberOfPlanets: 0,
+        };
 
   console.log("render " + rendertimes++);
 
@@ -106,7 +105,7 @@ export function CreateEditGalaxy() {
     initialValues: formikInitialValues,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      values.id === galaxies.length;
+      values.id === galaxy.name;
       setLoading(true);
       galaxies.push(values);
       navigate.navigate("Home");

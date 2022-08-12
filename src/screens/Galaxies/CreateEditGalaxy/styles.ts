@@ -19,7 +19,7 @@ export const Title = styled.Text`
 
 export const FormContainer = styled.View`
   justify-content: space-between;
-  height: 500px;
+  height: 530px;
 `;
 
 export const PhotoContainer = styled.View`

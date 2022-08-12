@@ -34,6 +34,7 @@ export const Photo = styled.Image`
   height: 220px;
 `;
 
+
 export const Info = styled.Text`
   font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.gray_300};
@@ -55,24 +56,19 @@ export const InfoContent = styled.Text`
 export const PlanetsSlider = styled.View`
   flex-direction: row;
   border-radius: 7px;
-  margin: 25px 15px 40px 15px;
-`;
-
-export const PlanetsTitle = styled.Text`
-  font-size: ${RFValue(18)}px;
-  color: ${({ theme }) => theme.colors.dark_green};
-  font-family: ${({ theme }) => theme.fonts.primary_500};
+  margin: 10px 16px;
+  align-items: center;
 `;
 
 export const PlanetImage = styled.ImageBackground`
-  width: 180px;
-  height: 180px;
+  width: 130px;
+  height: 130px;
   border-radius: 10px;
   align-items: center;
   justify-content: flex-end;
 `;
 export const PlanetName = styled.Text`
-  font-size: ${RFValue(18)}px;
+  font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.text_white};
   font-family: ${({ theme }) => theme.fonts.primary_500};
   margin-bottom: 7px;
@@ -85,21 +81,22 @@ export const ButtonsContainer = styled.View`
   margin: 0px 15px 25px 15px;
 `;
 
-export const DeleteButton = styled(TouchableOpacity).attrs({
-  activeOpacity: 0.6,
-})`
-  width: 190px;
-  height: 65px;
-  background-color: ${({ theme }) => theme.colors.gray_400};
-  border-radius: 4px;
-  align-items: center;
-  justify-content: center;
+export const AddPlanetText = styled.Text`
+  text-align: center;
+  font-size: ${RFValue(16)}px;
+  color: ${({ theme }) => theme.colors.gray_600};
+  font-family: ${({ theme }) => theme.fonts.primary_400};
+  padding: 10px 0;
+  margin: 16px;
+  background-color: ${({ theme }) => theme.colors.main_green};
+  border-radius: 5px;
 `;
-export const EditButton = styled(TouchableOpacity).attrs({
+
+export const OnlyIconButton = styled(TouchableOpacity).attrs({
   activeOpacity: 0.6,
 })`
-  width: 190px;
-  height: 65px;
+  width: 195px;
+  height: 60px;
   background-color: ${({ theme }) => theme.colors.main_green};
   border-radius: 4px;
   align-items: center;
