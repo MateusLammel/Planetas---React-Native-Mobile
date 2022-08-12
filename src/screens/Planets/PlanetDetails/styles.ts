@@ -13,7 +13,9 @@ export const Container = styled.ImageBackground`
   border-radius: 12px;
 `;
 
-export const Header = styled.View``;
+export const Header = styled.View`
+  margin-bottom: 20px;
+`;
 
 export const InfoContainer = styled(ScrollView).attrs({
   showsVerticalScrollIndicator: false,
@@ -23,7 +25,7 @@ export const InfoContainer = styled(ScrollView).attrs({
 `;
 
 export const Name = styled.Text`
-  margin: 10px 16px;
+  margin: 0 16px;
   font-size: ${RFValue(22)}px;
   color: ${({ theme }) => theme.colors.text_white};
   font-family: ${({ theme }) => theme.fonts.primary_500};
@@ -31,7 +33,7 @@ export const Name = styled.Text`
 
 export const Photo = styled.Image`
   width: 100%;
-  height: 220px;
+  height: 400px;
 `;
 
 export const Info = styled.Text`
@@ -52,8 +54,6 @@ export const InfoContent = styled.Text`
   line-height: 28px;
 `;
 
-
-
 export const ButtonsContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
@@ -61,21 +61,11 @@ export const ButtonsContainer = styled.View`
   margin: 0px 15px 25px 15px;
 `;
 
-export const DeleteButton = styled(TouchableOpacity).attrs({
+export const OnlyIconButton = styled(TouchableOpacity).attrs({
   activeOpacity: 0.6,
 })`
-  width: 190px;
-  height: 65px;
-  background-color: ${({ theme }) => theme.colors.gray_400};
-  border-radius: 4px;
-  align-items: center;
-  justify-content: center;
-`;
-export const EditButton = styled(TouchableOpacity).attrs({
-  activeOpacity: 0.6,
-})`
-  width: 190px;
-  height: 65px;
+  width: 195px;
+  height: 60px;
   background-color: ${({ theme }) => theme.colors.main_green};
   border-radius: 4px;
   align-items: center;

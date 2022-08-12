@@ -90,7 +90,10 @@ export function GalaxyDetails() {
         )}
       </PlanetsSlider>
 
-      <TouchableOpacity activeOpacity={0.8}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate("CreatePlanet", galaxy)}
+      >
         <AddPlanetText>Adicionar planetas</AddPlanetText>
       </TouchableOpacity>
 

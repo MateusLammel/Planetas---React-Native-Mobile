@@ -2,13 +2,12 @@ import React from "react";
 import {
   ButtonsContainer,
   Container,
-  DeleteButton,
-  EditButton,
   Header,
   Info,
   InfoContainer,
   InfoContent,
   Name,
+  OnlyIconButton,
   Photo,
 } from "./styles";
 import Background from "../../../assets/back.png";
@@ -28,7 +27,7 @@ export function PlanetDetails() {
     <Container source={Background}>
       <Header>
         <StatusBar barStyle="light-content" />
-        <Photo source={{ uri: planet.photo }} />
+        <Photo source={{ uri: planet.photo }} resizeMode="cover" />
       </Header>
       <Name>{planet.name}</Name>
       <InfoContainer>
@@ -43,17 +42,19 @@ export function PlanetDetails() {
       </InfoContainer>
 
       <ButtonsContainer>
-        <DeleteButton>
+        <OnlyIconButton>
           <MaterialCommunityIcons
             name="delete-outline"
             size={34}
             color={theme.colors.gray_600}
           />
-        </DeleteButton>
+        </OnlyIconButton>
 
-        <EditButton onPress={() => navigation.navigate("EditPlanet", planet)}>
+        <OnlyIconButton
+          onPress={() => navigation.navigate("EditPlanet", planet)}
+        >
           <Feather name="edit" size={30} color={theme.colors.gray_600} />
-        </EditButton>
+        </OnlyIconButton>
       </ButtonsContainer>
     </Container>
   );
