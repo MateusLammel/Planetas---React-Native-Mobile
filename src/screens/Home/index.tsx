@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -15,10 +15,21 @@ import { InfoCard } from "../../components/InfoCard";
 import { StatusBar, TouchableOpacity } from "react-native";
 import { galaxies } from "../../data/galaxies";
 import { useTheme } from "styled-components";
+import { api } from "../../services/api";
+import { getGalaxies } from "../../services/Galaxies/getGalaxies";
 
 export function Home() {
   const navigation = useNavigation<any>();
   const theme = useTheme();
+  const [galaxies, setGalaxies] = useState<any>();
+
+  useEffect(() => {
+    getGalaxies()
+      .then((response: any) => {
+        setGalaxies(response.data.Galaxys);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Container source={Background}>

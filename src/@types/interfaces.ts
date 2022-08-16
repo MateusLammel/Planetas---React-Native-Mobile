@@ -2,16 +2,20 @@ export interface Galaxy {
   id: string;
   name: string;
   description: string;
-  photo: string;
+  color: string;
+  size: number;
   type: string;
-  numberOfPlanets: number;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Planet {
-  id: string;
   name: string;
   description: string;
-  size: number;
-  photo: string;
+  surfaceArea: number;
+  sunDistance: number;
+  durationDay: number;
+  gravity: number;
+  isActive: boolean;
   galaxy_id: string;
 }

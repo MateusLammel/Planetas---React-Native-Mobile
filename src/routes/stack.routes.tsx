@@ -14,7 +14,8 @@ const { Navigator, Screen } = createNativeStackNavigator();
 
 export function StackRoutes() {
   return (
-    <Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
+    <Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+      <Screen name="Home" component={Home} />
       <Screen name="Login" component={Login}></Screen>
       <Screen name="SignUp" component={SignUp}></Screen>
       <Screen name="GalaxyDetails" component={GalaxyDetails} />
@@ -23,9 +24,6 @@ export function StackRoutes() {
       <Screen name="CreatePlanet" component={CreatePlanet} />
       <Screen name="EditPlanet" component={EditPlanet} />
       <Screen name="PlanetDetails" component={PlanetDetails} />
-      <Screen name="Home" component={Home} />
-      <Screen name="Login" component={Login} />
-      <Screen name="SignUp" component={SignUp} />
     </Navigator>
   );
 }

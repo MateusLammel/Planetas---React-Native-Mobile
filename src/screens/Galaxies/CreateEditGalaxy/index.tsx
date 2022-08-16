@@ -86,16 +86,14 @@ export function CreateEditGalaxy() {
           name: galaxy.name,
           description: galaxy.description,
           type: galaxy.type,
-          photo: galaxy.photo,
-          numberOfPlanets: 0,
+          size: galaxy.size,
         }
       : {
           id: "",
           name: "",
           description: "",
           type: "Elíptica",
-          photo: "",
-          numberOfPlanets: 0,
+          size: 0,
         };
 
   console.log("render " + rendertimes++);
@@ -175,6 +173,19 @@ export function CreateEditGalaxy() {
         />
         {Boolean(formik.errors.description) && formik.touched.description && (
           <ErrorMessage>{formik.errors.description}</ErrorMessage>
+        )}
+        <InputText
+          iconName="maximize-2"
+          name="size"
+          placeholder="Tamanho em Km2"
+          placeholderTextColor={theme.colors.gray_300}
+          onChangeText={formik.handleChange("size")}
+          value={formik.values.size}
+          defaultValue={formik.values.size}
+          keyboardType="numeric"
+        />
+        {Boolean(formik.errors.size) && formik.touched.size && (
+          <ErrorMessage>{formik.errors.size}</ErrorMessage>
         )}
         <Select>
           {types.map((type) => (
