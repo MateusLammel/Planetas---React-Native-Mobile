@@ -29,6 +29,7 @@ import {
   useRoute,
 } from "@react-navigation/native";
 import { Galaxy } from "../../../@types/interfaces";
+import { createGalaxy } from "../../../services/Galaxies/createGalaxy";
 
 const types = ["Elíptica", "Espiral", "Irregular"];
 var rendertimes = 0;
@@ -68,9 +69,10 @@ export function CreateEditGalaxy() {
   }
 
   function handleSubmit() {
-    // if (!formik.values.photo) {
-    //   Alert.alert("Escolha uma imagem");
-    // }
+    if(!editPage){
+      Alert.alert("A edição ainda não foi implementada no back-End")
+      navigate.navigate("Home")
+    }
     formik.handleSubmit();
   }
 
@@ -82,17 +84,18 @@ export function CreateEditGalaxy() {
   const formikInitialValues =
     editPage && galaxy
       ? {
-          id: galaxy.id,
           name: galaxy.name,
           description: galaxy.description,
           type: galaxy.type,
           size: galaxy.size,
+          color: "red",
         }
       : {
           name: "",
           description: "",
           type: "Elíptica",
           size: 0,
+          color: "red",
         };
 
   const formik = useFormik({
@@ -101,8 +104,11 @@ export function CreateEditGalaxy() {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setLoading(true);
-
-      navigate.navigate("Home");
+      createGalaxy(values)
+        .then(() => {
+          navigate.navigate("Home");
+        })
+        .catch((err) => console.log(err));
     },
   });
 

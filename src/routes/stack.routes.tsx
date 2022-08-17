@@ -7,8 +7,8 @@ import { Home } from "../screens/Home";
 import { GalaxyDetails } from "../screens/Galaxies/GalaxyDetails";
 import { CreateEditGalaxy } from "../screens/Galaxies/CreateEditGalaxy";
 import { PlanetDetails } from "../screens/Planets/PlanetDetails";
-import { CreatePlanet } from "../screens/Planets/CreatePlanet/CreatePlanet";
-import { EditPlanet } from "../screens/Planets/CreatePlanet/EditPlanet";
+import { CreatePlanet } from "../screens/Planets/CreateEditPlanet/CreatePlanet";
+import { EditPlanet } from "../screens/Planets/CreateEditPlanet/EditPlanet";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 

@@ -18,6 +18,7 @@ import Background from "../../../assets/back.png";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Galaxy, Planet } from "../../../@types/interfaces";
 import {
+  Alert,
   FlatList,
   StatusBar,
   Text,
@@ -29,6 +30,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { planets } from "../../../data/planets";
 import { useTheme } from "styled-components";
 import { getGalaxyById } from "../../../services/Galaxies/getGalaxyById";
+import { deleteGalaxy } from "../../../services/Galaxies/deleteGalaxy";
 
 export function GalaxyDetails() {
   const route = useRoute();
@@ -44,6 +46,15 @@ export function GalaxyDetails() {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  function handleDeleteGalaxy(id) {
+    deleteGalaxy(id)
+      .then((response) => {
+        Alert.alert("Galáxia excluída com sucesso");
+        navigation.navigate("Home");
+      })
+      .catch((err) => Alert.alert(err));
+  }
 
   return (
     <Container source={Background}>
@@ -69,7 +80,7 @@ export function GalaxyDetails() {
           <InfoContent> {thisGalaxyPlanets.length}</InfoContent>
         </Info>
         <Info>
-         Tamanho da galáxia:
+          Tamanho da galáxia:
           <InfoContent> {String(galaxy.size)} Km2</InfoContent>
         </Info>
       </FormContainer>
@@ -115,6 +126,7 @@ export function GalaxyDetails() {
             name="delete-outline"
             size={34}
             color={theme.colors.gray_600}
+            onPress={() => handleDeleteGalaxy(galaxy.id)}
           />
         </OnlyIconButton>
 

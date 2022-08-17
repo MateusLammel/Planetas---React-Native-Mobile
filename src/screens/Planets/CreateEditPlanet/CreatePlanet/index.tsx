@@ -30,6 +30,7 @@ import { Galaxy, Planet } from "../../../../@types/interfaces";
 import { planets } from "../../../../data/planets";
 import { validationSchema } from "../validationSchema";
 import { Separator } from "../../../Home/styles";
+import { createPlanet } from "../../../../services/Planets/createPlanet";
 
 export function CreatePlanet() {
   const navigate = useNavigation<any>();
@@ -73,11 +74,17 @@ export function CreatePlanet() {
       sunDistance: "",
       gravity: "",
       galaxy_id: id,
+      isActive: true,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      values.id === values.name;
-      // planets.push({ ...values, size: Number(values.durationDay) });
+      Number(values.surfaceArea);
+      Number(values.sunDistance, values.gravity, values.durationDay);
+      createPlanet(values)
+        .then(() => {
+          navigate.navigate("Home");
+        })
+        .catch((err) => console.log(err));
       navigate.navigate("Home");
     },
   });
