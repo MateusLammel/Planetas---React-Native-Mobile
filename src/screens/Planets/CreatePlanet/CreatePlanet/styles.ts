@@ -17,10 +17,7 @@ export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.text_white};
 `;
 
-export const FormContainer = styled.View`
-  justify-content: space-between;
-  height: 530px;
-`;
+export const FormContainer = styled.ScrollView``;
 
 export const PhotoContainer = styled.View`
   width: 100%;
@@ -29,6 +26,7 @@ export const PhotoContainer = styled.View`
   justify-content: center;
   border-radius: 5px;
   background-color: ${({ theme }) => theme.colors.black};
+  margin-bottom: 15px;
 `;
 
 export const IconBack = styled(TouchableOpacity).attrs({

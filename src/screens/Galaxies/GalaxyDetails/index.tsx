@@ -28,6 +28,7 @@ import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { planets } from "../../../data/planets";
 import { useTheme } from "styled-components";
+import { getGalaxyById } from "../../../services/Galaxies/getGalaxyById";
 
 export function GalaxyDetails() {
   const route = useRoute();
@@ -37,9 +38,11 @@ export function GalaxyDetails() {
   const theme = useTheme();
 
   useEffect(() => {
-    setThisGalaxyPlanets(
-      planets.filter((planet) => planet.galaxy_id === galaxy.id)
-    );
+    getGalaxyById(galaxy.id)
+      .then((response: any) => {
+        setThisGalaxyPlanets(response.data.Planet);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -60,6 +63,14 @@ export function GalaxyDetails() {
         </Info>
         <Info>
           Tipo: <InfoContent> {galaxy.type}</InfoContent>
+        </Info>
+        <Info>
+          Número de planetas:
+          <InfoContent> {thisGalaxyPlanets.length}</InfoContent>
+        </Info>
+        <Info>
+         Tamanho da galáxia:
+          <InfoContent> {String(galaxy.size)} Km2</InfoContent>
         </Info>
       </FormContainer>
 

@@ -34,7 +34,6 @@ export const Photo = styled.Image`
   height: 220px;
 `;
 
-
 export const Info = styled.Text`
   font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.gray_300};
@@ -56,7 +55,7 @@ export const InfoContent = styled.Text`
 export const PlanetsSlider = styled.View`
   flex-direction: row;
   border-radius: 7px;
-  margin: 10px 16px;
+  margin: 10px 16px  0px 16px;
   align-items: center;
 `;
 

@@ -19,12 +19,13 @@ export const Title = styled.Text`
 
 export const FormContainer = styled.View`
   justify-content: space-between;
-  height: 530px;
+  height: 540px;
 `;
 
 export const PhotoContainer = styled.View`
+
   width: 100%;
-  height: 240px;
+  height: 200px;
   align-items: center;
   justify-content: center;
   border-radius: 5px;

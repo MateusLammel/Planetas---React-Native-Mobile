@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, StatusBar } from "react-native";
+import { Alert, FlatList, StatusBar, View } from "react-native";
 
 import { useFormik } from "formik";
 import { useTheme } from "styled-components";
@@ -29,12 +29,13 @@ import { IconButton } from "../../../../components/IconButton/Index";
 import { Galaxy, Planet } from "../../../../@types/interfaces";
 import { planets } from "../../../../data/planets";
 import { validationSchema } from "../validationSchema";
+import { Separator } from "../../../Home/styles";
 
 export function CreatePlanet() {
   const navigate = useNavigation<any>();
   const theme = useTheme();
   const route = useRoute();
-  const { name } = route.params as Galaxy;
+  const { id } = route.params as Galaxy;
 
   async function handleSelectPhoto() {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -67,13 +68,16 @@ export function CreatePlanet() {
       name: "",
       description: "",
       photo: "",
-      size: "",
-      galaxy_id: name,
+      durationDay: "",
+      surfaceArea: "",
+      sunDistance: "",
+      gravity: "",
+      galaxy_id: id,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       values.id === values.name;
-      planets.push({ ...values, size: Number(values.size) });
+      // planets.push({ ...values, size: Number(values.durationDay) });
       navigate.navigate("Home");
     },
   });
@@ -84,7 +88,12 @@ export function CreatePlanet() {
       <Header>
         <Title>Cadastrar um novo planeta</Title>
       </Header>
-      <FormContainer>
+      <FormContainer
+        style={{
+          marginVertical: 20,
+        }}
+        s
+      >
         <PhotoContainer>
           {!!formik.values.photo ? (
             <>
@@ -125,6 +134,7 @@ export function CreatePlanet() {
         {Boolean(formik.errors.name) && formik.touched.name && (
           <ErrorMessage>{formik.errors.name}</ErrorMessage>
         )}
+        <View style={{ height: 15 }} />
         <InputText
           multiline
           numberOfLines={3}
@@ -139,18 +149,61 @@ export function CreatePlanet() {
         {Boolean(formik.errors.description) && formik.touched.description && (
           <ErrorMessage>{formik.errors.description}</ErrorMessage>
         )}
+        <View style={{ height: 15 }} />
+        <InputText
+          iconName="maximize-2"
+          name="surfaceArea"
+          placeholder="Tamanho em Km2"
+          placeholderTextColor={theme.colors.gray_300}
+          onChangeText={formik.handleChange("surfaceArea")}
+          value={formik.values.surfaceArea}
+          defaultValue={formik.values.surfaceArea}
+          keyboardType="numeric"
+        />
+        {Boolean(formik.errors.surfaceArea) && formik.touched.surfaceArea && (
+          <ErrorMessage>{formik.errors.surfaceArea}</ErrorMessage>
+        )}
+        <View style={{ height: 15 }} />
         <InputText
           iconName="maximize-2"
           name="size"
-          placeholder="Tamanho em Km2"
+          placeholder="Distância do Sol"
           placeholderTextColor={theme.colors.gray_300}
-          onChangeText={formik.handleChange("size")}
-          value={formik.values.size}
-          defaultValue={formik.values.size}
+          onChangeText={formik.handleChange("sunDistance")}
+          value={formik.values.sunDistance}
+          defaultValue={formik.values.sunDistance}
           keyboardType="numeric"
         />
-        {Boolean(formik.errors.size) && formik.touched.size && (
-          <ErrorMessage>{formik.errors.size}</ErrorMessage>
+        {Boolean(formik.errors.sunDistance) && formik.touched.sunDistance && (
+          <ErrorMessage>{formik.errors.sunDistance}</ErrorMessage>
+        )}
+        <View style={{ height: 15 }} />
+        <InputText
+          iconName="maximize-2"
+          name="gravity"
+          placeholder="Força da gravidade"
+          placeholderTextColor={theme.colors.gray_300}
+          onChangeText={formik.handleChange("gravity")}
+          value={formik.values.gravity}
+          defaultValue={formik.values.gravity}
+          keyboardType="numeric"
+        />
+        {Boolean(formik.errors.gravity) && formik.touched.gravity && (
+          <ErrorMessage>{formik.errors.gravity}</ErrorMessage>
+        )}
+        <View style={{ height: 15 }} />
+        <InputText
+          iconName="maximize-2"
+          name="durationDay"
+          placeholder="Duração do dia"
+          placeholderTextColor={theme.colors.gray_300}
+          onChangeText={formik.handleChange("durationDay")}
+          value={formik.values.durationDay}
+          defaultValue={formik.values.durationDay}
+          keyboardType="numeric"
+        />
+        {Boolean(formik.errors.durationDay) && formik.touched.durationDay && (
+          <ErrorMessage>{formik.errors.durationDay}</ErrorMessage>
         )}
       </FormContainer>
       <ButtonsContainer>

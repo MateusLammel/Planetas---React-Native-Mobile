@@ -68,9 +68,9 @@ export function CreateEditGalaxy() {
   }
 
   function handleSubmit() {
-    if (!formik.values.photo) {
-      Alert.alert("Escolha uma imagem");
-    }
+    // if (!formik.values.photo) {
+    //   Alert.alert("Escolha uma imagem");
+    // }
     formik.handleSubmit();
   }
 
@@ -89,23 +89,19 @@ export function CreateEditGalaxy() {
           size: galaxy.size,
         }
       : {
-          id: "",
           name: "",
           description: "",
           type: "Elíptica",
           size: 0,
         };
 
-  console.log("render " + rendertimes++);
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: formikInitialValues,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      values.id === galaxy.name;
       setLoading(true);
-      galaxies.push(values);
+
       navigate.navigate("Home");
     },
   });
@@ -121,9 +117,10 @@ export function CreateEditGalaxy() {
 
       <FormContainer>
         <PhotoContainer>
-          {!!formik.values.photo ? (
+          {/* {!!formik.values.photo ? (
             <>
               <Photo
+              style={{"width": }}
                 source={{
                   uri: formik.values.photo,
                 }}
@@ -146,7 +143,7 @@ export function CreateEditGalaxy() {
               fontSize={20}
               iconSize={30}
             />
-          )}
+          )}  */}
         </PhotoContainer>
         <InputText
           iconName="edit-3"
@@ -180,8 +177,8 @@ export function CreateEditGalaxy() {
           placeholder="Tamanho em Km2"
           placeholderTextColor={theme.colors.gray_300}
           onChangeText={formik.handleChange("size")}
-          value={formik.values.size}
-          defaultValue={formik.values.size}
+          value={String(formik.values.size)}
+          defaultValue={String(formik.values.size)}
           keyboardType="numeric"
         />
         {Boolean(formik.errors.size) && formik.touched.size && (
