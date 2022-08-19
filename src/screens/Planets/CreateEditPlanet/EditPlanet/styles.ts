@@ -17,12 +17,10 @@ export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.text_white};
 `;
 
-export const FormContainer = styled.View`
-  justify-content: space-between;
-  height: 530px;
-`;
+export const FormContainer = styled.ScrollView``;
 
 export const PhotoContainer = styled.View`
+  margin-bottom: 15px;
   width: 100%;
   height: 240px;
   align-items: center;

@@ -17,6 +17,7 @@ import { StatusBar } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import theme from "../../../global/theme";
+import { deletePlanet } from "../../../services/Planets/deletePlanet";
 
 export function PlanetDetails() {
   const route = useRoute();
@@ -27,7 +28,10 @@ export function PlanetDetails() {
     <Container source={Background}>
       <Header>
         <StatusBar barStyle="light-content" />
-        <Photo source={{ uri: planet.photo }} resizeMode="cover" />
+        <Photo
+          source={{ uri: "data:image/jpeg;base64," + planet.photoBase64 }}
+          resizeMode="cover"
+        />
       </Header>
       <Name>{planet.name}</Name>
       <InfoContainer>
@@ -36,13 +40,25 @@ export function PlanetDetails() {
           <InfoContent> {planet.description}</InfoContent>
         </Info>
         <Info>
-          Tamanho:
-          <InfoContent> {String(planet.size)} Km2</InfoContent>
+          Tamanho da superfície:
+          <InfoContent> {String(planet.surfaceArea)} Km2</InfoContent>
+        </Info>
+        <Info>
+          Duração do dia:
+          <InfoContent> {String(planet.durationDay)} horas</InfoContent>
+        </Info>
+        <Info>
+          Força gravitacional:
+          <InfoContent> {String(planet.gravity)}</InfoContent>
+        </Info>
+        <Info>
+          Distância do sol:
+          <InfoContent> {String(planet.sunDistance)}</InfoContent>
         </Info>
       </InfoContainer>
 
       <ButtonsContainer>
-        <OnlyIconButton>
+        <OnlyIconButton onPress={() => deletePlanet(planet.id)}>
           <MaterialCommunityIcons
             name="delete-outline"
             size={34}

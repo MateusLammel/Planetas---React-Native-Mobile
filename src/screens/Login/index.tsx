@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Keyboard, StatusBar } from "react-native";
+import { Alert, Keyboard, StatusBar } from "react-native";
 import { InputText } from "../../components/InputText";
 import {
   Container,
@@ -16,6 +16,7 @@ import Logo from "../../assets/logo.png";
 import { Button } from "../../components/Button";
 import Background from "../../assets/back.png";
 import { useNavigation } from "@react-navigation/native";
+import { authentiqueUser } from "../../services/User/authenticateUser";
 
 export function Login() {
   const theme = useTheme();
@@ -37,10 +38,11 @@ export function Login() {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setLoading(true);
-      setTimeout(function () {
-        navigation.navigate("Home");
-        setLoading(false);
-      }, 2000);
+      authentiqueUser(values)
+        .then((response) => {
+          navigation.navigate("Home");
+        })
+        .catch((err) => Alert.alert("Ocorreu um erro ao tentar efetuar login"));
     },
   });
 

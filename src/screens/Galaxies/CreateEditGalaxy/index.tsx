@@ -28,11 +28,11 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import { Galaxy } from "../../../@types/interfaces";
+import { Galaxy, ICreateGalaxy } from "../../../@types/interfaces";
 import { createGalaxy } from "../../../services/Galaxies/createGalaxy";
 
 const types = ["Elíptica", "Espiral", "Irregular"];
-var rendertimes = 0;
+
 export function CreateEditGalaxy() {
   const [loading, setLoading] = useState(false);
   const [editPage, setEditPage] = useState(false);
@@ -40,38 +40,39 @@ export function CreateEditGalaxy() {
   const theme = useTheme();
   const route = useRoute();
   const galaxy = route.params as Galaxy;
-
-  useFocusEffect(() => {
+  useEffect(() => {
     if (route.name.includes("EditGalaxy")) {
       setEditPage(true);
     }
-  });
+  }, []);
 
   function handleSelectType(value) {
     formik.setFieldValue("type", value, false);
   }
 
-  async function handleSelectAvatar() {
+  async function handleSelectPhoto() {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 4],
-      quality: 1,
+      quality: 0.2,
+      base64: true,
     });
+    console.log(result);
 
     if (result.cancelled) {
       return;
     }
-    const { uri } = result as ImagePicker.ImageInfo;
-    if (uri) {
-      formik.setFieldValue("photo", uri, false);
+    const { base64 } = result as ImagePicker.ImageInfo;
+    if (base64) {
+      formik.setFieldValue("photoBase64", base64, false);
     }
   }
 
   function handleSubmit() {
-    if(!editPage){
-      Alert.alert("A edição ainda não foi implementada no back-End")
-      navigate.navigate("Home")
+    if (!formik.values.photoBase64) {
+      Alert.alert("Escolha uma imagem para a galáxia");
+      return;
     }
     formik.handleSubmit();
   }
@@ -79,30 +80,36 @@ export function CreateEditGalaxy() {
   const validationSchema = object({
     name: string().required("Nome obrigatório"),
     description: string().required("Descrição é obrigatória"),
+    size: string().required("Tamanho obrigatório"),
   });
 
   const formikInitialValues =
-    editPage && galaxy
+    editPage && galaxy.name
       ? {
           name: galaxy.name,
           description: galaxy.description,
           type: galaxy.type,
-          size: galaxy.size,
-          color: "red",
+          size: String(galaxy.size),
+          color: galaxy.color,
+          photoBase64: galaxy.photoBase64,
+          id: galaxy.id,
+          created_at: galaxy.created_at,
+          updated_at: galaxy.updated_at,
         }
       : {
           name: "",
           description: "",
           type: "Elíptica",
-          size: 0,
+          size: "",
           color: "red",
+          photoBase64: "",
         };
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: formikInitialValues,
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values: ICreateGalaxy) => {
       setLoading(true);
       createGalaxy(values)
         .then(() => {
@@ -123,15 +130,14 @@ export function CreateEditGalaxy() {
 
       <FormContainer>
         <PhotoContainer>
-          {/* {!!formik.values.photo ? (
+          {!!formik.values.photoBase64 ? (
             <>
               <Photo
-              style={{"width": }}
                 source={{
-                  uri: formik.values.photo,
+                  uri: "data:image/jpeg;base64," + formik.values.photoBase64,
                 }}
               />
-              <IconBack onPress={handleSelectAvatar}>
+              <IconBack onPress={handleSelectPhoto}>
                 <CameraIcon
                   size={28}
                   color={theme.colors.gray_500}
@@ -141,7 +147,7 @@ export function CreateEditGalaxy() {
             </>
           ) : (
             <IconButton
-              onPress={handleSelectAvatar}
+              onPress={handleSelectPhoto}
               iconColor={theme.colors.gray_300}
               iconName="device-camera"
               title="Escolha a imagem"
@@ -149,7 +155,7 @@ export function CreateEditGalaxy() {
               fontSize={20}
               iconSize={30}
             />
-          )}  */}
+          )}
         </PhotoContainer>
         <InputText
           iconName="edit-3"

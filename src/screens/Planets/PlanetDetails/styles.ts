@@ -33,7 +33,7 @@ export const Name = styled.Text`
 
 export const Photo = styled.Image`
   width: 100%;
-  height: 400px;
+  height: 380px;
 `;
 
 export const Info = styled.Text`

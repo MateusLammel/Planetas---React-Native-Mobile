@@ -1,12 +1,5 @@
+import { ICreateGalaxy } from "../../@types/interfaces";
 import { api } from "../api";
-
-interface ICreateGalaxy {
-  name: string;
-  description: string;
-  color: string;
-  size: number;
-  type: string;
-}
 
 export const createGalaxy = async ({
   name,
@@ -14,14 +7,16 @@ export const createGalaxy = async ({
   color,
   size,
   type,
+  photoBase64,
 }: ICreateGalaxy) => {
   try {
     return api.post("/galaxy", {
       name,
       description,
       color,
-      size,
+      size: Number(size),
       type,
+      photoBase64,
     });
   } catch (error) {
     return Promise.reject(error);

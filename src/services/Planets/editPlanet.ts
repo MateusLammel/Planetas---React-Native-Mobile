@@ -1,4 +1,4 @@
-import { ICreatePlanet } from "../../@types/interfaces";
+import { ICreatePlanet, IUpdatePlanet } from "../../@types/interfaces";
 import { api } from "../api";
 
 export const createPlanet = async ({
@@ -9,11 +9,10 @@ export const createPlanet = async ({
   durationDay,
   gravity,
   isActive,
-  galaxy_id,
   photoBase64,
-}: ICreatePlanet) => {
+}: IUpdatePlanet) => {
   try {
-    return api.post("/planet", {
+    return api.put("/planet", {
       name,
       description,
       surfaceArea: Number(surfaceArea),
@@ -21,7 +20,6 @@ export const createPlanet = async ({
       durationDay: Number(durationDay),
       gravity: Number(gravity),
       isActive,
-      galaxy_id,
       photoBase64,
     });
   } catch (error) {

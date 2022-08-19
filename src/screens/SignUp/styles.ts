@@ -1,8 +1,9 @@
 import React from "react";
-import { StatusBar } from "react-native";
+import { StatusBar, TouchableOpacity } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 import Background from "../../assets/back.png";
+import { Octicons } from "@expo/vector-icons";
 
 export const Container = styled.ImageBackground`
   flex: 1;
@@ -45,6 +46,31 @@ export const SignUpContainer = styled.View`
   border-color: ${({ theme }) => theme.colors.black};
   padding: 24px 16px;
   margin-top: 50px;
+`;
+export const PhotoContainer = styled.View`
+  width: 100%;
+  height: 200px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.black};
+`;
+
+export const IconBack = styled(TouchableOpacity).attrs({
+  activeOpacity: 0.8,
+})`
+  background-color: ${({ theme }) => theme.colors.text_white};
+  padding: 12px;
+  border-radius: 40px;
+  position: absolute;
+  right: 30px;
+  bottom: -5px;
+`;
+export const CameraIcon = styled(Octicons)``;
+export const Photo = styled.Image`
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
 `;
 
 export const InputsContainer = styled.View`

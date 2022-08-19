@@ -4,11 +4,7 @@ import { Alert, FlatList, StatusBar, View } from "react-native";
 import { useFormik } from "formik";
 import { useTheme } from "styled-components";
 import * as ImagePicker from "expo-image-picker";
-import {
-  useFocusEffect,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import {
   Container,
@@ -26,10 +22,8 @@ import { Button } from "../../../../components/Button";
 import Background from "../../../../assets/estrelas.png";
 import { InputText } from "../../../../components/InputText";
 import { IconButton } from "../../../../components/IconButton/Index";
-import { Galaxy, Planet } from "../../../../@types/interfaces";
-import { planets } from "../../../../data/planets";
+import { Galaxy, ICreatePlanet, Planet } from "../../../../@types/interfaces";
 import { validationSchema } from "../validationSchema";
-import { Separator } from "../../../Home/styles";
 import { createPlanet } from "../../../../services/Planets/createPlanet";
 
 export function CreatePlanet() {
@@ -43,21 +37,23 @@ export function CreatePlanet() {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 4],
-      quality: 1,
+      quality: 0.2,
+      base64: true,
     });
 
     if (result.cancelled) {
       return;
     }
-    const { uri } = result as ImagePicker.ImageInfo;
-    if (uri) {
-      formik.setFieldValue("photo", uri, false);
+    const { base64 } = result as ImagePicker.ImageInfo;
+    if (base64) {
+      formik.setFieldValue("photoBase64", base64, false);
     }
   }
 
   function handleSubmit() {
-    if (!formik.values.photo) {
-      Alert.alert("Escolha uma imagem");
+    if (!formik.values.photoBase64) {
+      Alert.alert("Escolha uma imagem para o planeta");
+      return;
     }
     formik.handleSubmit();
   }
@@ -65,27 +61,24 @@ export function CreatePlanet() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      id: "",
       name: "",
       description: "",
-      photo: "",
       durationDay: "",
       surfaceArea: "",
       sunDistance: "",
       gravity: "",
       galaxy_id: id,
       isActive: true,
+      photoBase64: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      Number(values.surfaceArea);
-      Number(values.sunDistance, values.gravity, values.durationDay);
+    onSubmit: (values: ICreatePlanet) => {
       createPlanet(values)
-        .then(() => {
+        .then((response) => {
           navigate.navigate("Home");
         })
         .catch((err) => console.log(err));
-      navigate.navigate("Home");
+  
     },
   });
 
@@ -99,15 +92,15 @@ export function CreatePlanet() {
         style={{
           marginVertical: 20,
         }}
-        s
       >
         <PhotoContainer>
-          {!!formik.values.photo ? (
+          {!!formik.values.photoBase64 ? (
             <>
               <Photo
                 source={{
-                  uri: formik.values.photo,
+                  uri: "data:image/jpeg;base64," + formik.values.photoBase64,
                 }}
+                resizeMode="contain"
               />
               <IconBack onPress={handleSelectPhoto}>
                 <CameraIcon
@@ -173,7 +166,7 @@ export function CreatePlanet() {
         <View style={{ height: 15 }} />
         <InputText
           iconName="maximize-2"
-          name="size"
+          name="sunDistance"
           placeholder="Distância do Sol"
           placeholderTextColor={theme.colors.gray_300}
           onChangeText={formik.handleChange("sunDistance")}

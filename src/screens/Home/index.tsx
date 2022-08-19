@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 import {
@@ -17,19 +17,20 @@ import { galaxies } from "../../data/galaxies";
 import { useTheme } from "styled-components";
 import { api } from "../../services/api";
 import { getGalaxies } from "../../services/Galaxies/getGalaxies";
+import { Planet } from "../../@types/interfaces";
 
 export function Home() {
   const navigation = useNavigation<any>();
   const theme = useTheme();
   const [galaxies, setGalaxies] = useState<any>();
 
-  useEffect(() => {
+  useFocusEffect(() => {
     getGalaxies()
       .then((response: any) => {
         setGalaxies(response.data.Galaxys);
       })
       .catch((err) => console.log(err));
-  }, []);
+  });
 
   return (
     <Container source={Background}>
@@ -42,14 +43,14 @@ export function Home() {
       </Header>
       <GalaxiesList
         data={galaxies}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item: Planet) => item.id}
         ItemSeparatorComponent={() => <Separator />}
         renderItem={({ item }) => (
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => navigation.navigate("GalaxyDetails", item)}
           >
-            <InfoCard photo={item.photo} name={item.name} />
+            <InfoCard photo={item.photoBase64} name={item.name} />
           </TouchableOpacity>
         )}
       />
